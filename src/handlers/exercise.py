@@ -4,7 +4,7 @@ from bson.json_util import dumps, loads
 from bson.objectid import ObjectId
 
 
-class EditExerciseHandler(BaseHandler):
+class ExerciseHandler(BaseHandler):
 
     @coroutine
     def get_lesson_exercises(self, lesson_id):

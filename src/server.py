@@ -2,6 +2,7 @@ from tornado import ioloop, web
 import re
 from tornado.options import define, options, parse_command_line, parse_config_file
 from handlers.lesson import  LessonHandler
+from handlers.exercise import  ExerciseHandler
 
 
 define("port", default=6666, help="run on port", type=int)
@@ -14,6 +15,7 @@ define("mongo_db_name", default='tracker', help="mongo database name", type=str)
 def api():
     return web.Application([
         (r"/api/server/lesson", LessonHandler),
+        (r"/api/server/exercise", ExerciseHandler),
     ])
 
 if __name__ == "__main__":
