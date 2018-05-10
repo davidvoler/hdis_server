@@ -25,3 +25,26 @@ class LessonHandler(BaseHandler):
         else:
             lessons = self.get_all_lessons();
             self.write(dumps(lessons))
+    
+    @coroutine
+    def post(self):
+        id = self.get_argument('id', None)
+        lesson = loads(self.request.body)
+        db = self.get_db()
+        #updates existing lesson
+        if id:
+            try:
+              del lesson['_id']
+            except:
+              pass
+            res = yield db['lessons'].update_one({'_id': ObjectId(id)},{"$set": lesson})
+            self.write(dumps(res))
+        else:
+          try:
+              del lesson['_id']
+            except:
+              pass
+          res = yield db['lessons'].insert_one(lesson)
+          self.write(dumps(res))
+          
+            
