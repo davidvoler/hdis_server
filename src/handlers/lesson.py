@@ -1,14 +1,15 @@
 from tornado.gen import coroutine
 from handlers.base import BaseHandler
-from bson.json_util import dumps
+from bson.json_util import dumps, loads
 from bson.objectid import ObjectId
 
 
 class LessonHandler(BaseHandler):
     @coroutine
     def get_all_lessons(self):
+        db = self.get_db()
         lessons = []
-        cursor = yield db['lessons'].find({})
+        cursor =  db['lessons'].find({})
         while (yield cursor.fetch_next):
             doc = cursor.next_object()
             doc['_id'] = str(doc['_id'])
@@ -24,7 +25,7 @@ class LessonHandler(BaseHandler):
             lesson['id'] = str(lesson['_id'])
             self.write(dumps(lesson))
         else:
-            lessons = self.get_all_lessons()
+            lessons = yield self.get_all_lessons()
             self.write(dumps(lessons))
 
     @coroutine
@@ -46,4 +47,4 @@ class LessonHandler(BaseHandler):
             except Exception as e:
                 pass
             res = yield db['lessons'].insert_one(lesson)
-            self.write(dumps(res))
+            self.write(dumps({"status":0}))
