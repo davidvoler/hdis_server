@@ -14,12 +14,11 @@ from handlers.payments.purchase_handler import  PurchaseHandler
 
 
 
-define("port", default=6666, help="run on port", type=int)
+define("port", default=5555, help="run on port", type=int)
 define("mongo_host", default='localhost', help="mongo host", type=str)
 define("mongo_port", default=27017, help="mongo port", type=int)
 define("mongo_db_name", default='tracker', help="mongo database name", type=str)
-define("payments_server_url", default='http://localhost:8888', help="payments_server_url", type=str)
-
+define("payments_server_url", default='http://localhost:8888/payments/api', help="payments_server_url", type=str)
 
 
 def api():
@@ -29,6 +28,7 @@ def api():
         (r"/server/api/content_by_id", ContentbyIdHandler),
         (r"/server/api/content", ContentHandler),
         (r"/server/api/purchase", PurchaseHandler),
+        (r"/server/api/dashboard", DashboardHandler),
     ])
 
 if __name__ == "__main__":
