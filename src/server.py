@@ -3,6 +3,15 @@ import re
 from tornado.options import define, options, parse_command_line, parse_config_file
 from handlers.lesson import  LessonHandler
 from handlers.exercise import  ExerciseHandler
+from handlers.payments.add_contributor_handler import  AddContributorHandler
+from handlers.payments.content_by_id_handler import  ContentbyIdHandler
+from handlers.payments.content_handler import  ContentHandler
+from handlers.payments.dashboard_handler import  DashboardHandler
+from handlers.payments.purchase_handler import  PurchaseHandler
+
+
+
+
 
 
 define("port", default=6666, help="run on port", type=int)
@@ -15,8 +24,11 @@ define("payments_server_url", default='http://localhost:8888', help="payments_se
 
 def api():
     return web.Application([
-        (r"/api/server/lesson", LessonHandler),
-        (r"/api/server/exercise", ExerciseHandler),
+        (r"/server/api/lesson", LessonHandler),
+        (r"/server/api/exercise", ExerciseHandler),
+        (r"/server/api/content_by_id", ContentbyIdHandler),
+        (r"/server/api/content", ContentHandler),
+        (r"/server/api/purchase", PurchaseHandler),
     ])
 
 if __name__ == "__main__":
