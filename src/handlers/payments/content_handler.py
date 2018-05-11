@@ -21,4 +21,5 @@ class ContentHandler(web.RequestHandler):
               response = yield http_client.fetch(url)
               self.write(response.body)
           except Exception as e:
-              self.set_status(response.code, str(e))
+              self.set_status(500, str(e))
+              self.write(dumps({'error':str(e)}))
